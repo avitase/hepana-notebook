@@ -1,0 +1,15 @@
+\documentclass{standalone}
+
+\usepackage{feynmp-auto}
+
+\usepackage{ifthen}
+\newboolean{uprightparticles}
+\setboolean{uprightparticles}{false}
+
+\input{lhcb-symbols-def.tex}
+
+\begin{document}
+    \unitlength = 1mm
+    \fmfpen{thick}
+    \begin{fmffile}{decay}
+
