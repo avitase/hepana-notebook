@@ -4,7 +4,7 @@ import numpy as np
 import os
 
 def poisson_interval(k, alpha=2.*0.159):
-    if k == 0: return -math.log(alpha)
+    if k == 0: return 0., -math.log(alpha)
     high = chi2.ppf(1.-alpha/2., 2*k + 2) / 2.
     low = chi2.ppf(alpha/2., 2*k) / 2. if k > 0 else 0.
     return low, high
