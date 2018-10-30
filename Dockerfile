@@ -10,6 +10,8 @@ gnuplot \
 texlive-full \
 ghostscript imagemagick
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+ADD fixpolicy.sh /
+RUN /fixpolicy.sh && rm /fixpolicy.sh
 
 USER ${USERNAME}
 

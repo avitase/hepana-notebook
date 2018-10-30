@@ -1,9 +1,13 @@
-.PHONY: all clean notebook
+.PHONY: all clean notebook fixpolicy.sh
 
 all: notebook 
 
-clean:
-	docker rmi phd-notebook
+fixpolicy.sh:
+	wget https://raw.githubusercontent.com/avitase/docker-imagemagick/master/fixpolicy.sh fixpolicy.sh
+	chmod u+x fixpolicy.sh
 
-notebook: 
+clean:
+	rm fixpolicy.sh
+
+notebook: fixpolicy.sh
 	docker build --rm -t hepana-notebook:local .
