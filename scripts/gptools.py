@@ -12,7 +12,7 @@ preamble = [
     r'''\newcommand{\MagDown}{\ensuremath{\mathrm{\textit{MagDown}}}}''',
     r'''\newcommand{\tev}{\ensuremath{\mathrm{Te\kern -0.1em V}}}''',
     r'''\newcommand{\invfb}{\ensuremath{\mathrm{fb}^{-1}}}''',
-    r'''\newcommand{\Lb}{\ensuremath{\Lambda_b^0}}''',
+    r'''\newcommand{\Lb}{\ensuremath{\Lambda_b}}''',
     r'''\newcommand{\Lz}{\ensuremath{\Lambda}}''',
     r'''\newcommand{\Dz}{\ensuremath{D^0}}''',
     r'''\newcommand{\Ks}{\ensuremath{K_s}}''',
