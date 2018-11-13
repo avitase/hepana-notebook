@@ -15,7 +15,7 @@ preamble = [
     r'''\newcommand{\Lb}{\ensuremath{\Lambda_b}}''',
     r'''\newcommand{\Lz}{\ensuremath{\Lambda}}''',
     r'''\newcommand{\Dz}{\ensuremath{D^0}}''',
-    r'''\newcommand{\Ks}{\ensuremath{K_s}}''',
+    r'''\newcommand{\Ks}{\ensuremath{K_{\mathrm{\scriptscriptstyle S}}}}''',
     r'''\newcommand{\jpsi}{\ensuremath{J\mskip -3mu/\mskip -2mu\psi\mskip 2mu}}''',
 ]
 
