@@ -3,11 +3,17 @@ FROM jupyter/scipy-notebook:latest
 ARG USERNAME=jovyan
 
 USER root
-RUN apt-get update -yqq && \
-apt-get install -yqq apt-utils
-RUN apt-get install -yqq \
+RUN apt-get update -yq && \
+apt-get install -yq apt-utils
+RUN apt-get install -yq \
+texlive \
+texlive-latex-extra \
+texlive-luatex \
+texlive-pictures \
+texlive-pstricks \
+texlive-science
+RUN apt-get install -yq \
 gnuplot \
-texlive-full \
 ghostscript imagemagick
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 ADD fixpolicy.sh /
