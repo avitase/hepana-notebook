@@ -4,20 +4,25 @@ size_small = (2.8, 2.1)
 size_medium = (4.0, 3.0)
 
 preamble = [
-    r'''\newcommand{\mevcc}{\ensuremath{\mathrm{Me\kern -0.1em V\!/}c^2}}''',
-    r'''\newcommand{\mevc}{\ensuremath{\mathrm{Me\kern -0.1em V\!/}c}}''',
-    r'''\newcommand{\gevcc}{\ensuremath{\mathrm{Ge\kern -0.1em V\!/}c^2}}''',
-    r'''\newcommand{\gevc}{\ensuremath{\mathrm{Ge\kern -0.1em V\!/}c}}''',
-    r'''\newcommand{\MagUp}{\ensuremath{\mathrm{\textit{Mag\kern -0.05em Up}}}}''',
-    r'''\newcommand{\MagDown}{\ensuremath{\mathrm{\textit{MagDown}}}}''',
-    r'''\newcommand{\tev}{\ensuremath{\mathrm{Te\kern -0.1em V}}}''',
-    r'''\newcommand{\invfb}{\ensuremath{\mathrm{fb}^{-1}}}''',
-    r'''\newcommand{\Lb}{\ensuremath{\Lambda_b}}''',
-    r'''\newcommand{\Lz}{\ensuremath{\Lambda}}''',
-    r'''\newcommand{\Dz}{\ensuremath{D^0}}''',
-    r'''\newcommand{\Ks}{\ensuremath{K_{\mathrm{\scriptscriptstyle S}}}}''',
-    r'''\newcommand{\jpsi}{\ensuremath{J\mskip -3mu/\mskip -2mu\psi\mskip 2mu}}''',
+    r'''\usepackage{ifthen}''',
+    r'''\newboolean{uprightparticles}''',
+    r'''\setboolean{uprightparticles}{false}''',
 ]
+with open(os.path.expanduser('~') + '/scripts/lhcb-symbols-def.tex', 'r') as f:
+    lines = [line.strip() for line in f.readlines()]
+    non_empty_or_comment = lambda x: len(x) > 0 and not x.startswith('%')
+    preamble += [line for line in lines if non_empty_or_comment(line)]
+
+    def remove_in_line_comments(x):
+        pos = x.find('%')
+        if pos < 0 or pos+1 == len(x) or (pos > 0 and x[pos-1] == '\\'):
+            return x
+        else:
+            return x[:pos]
+    preamble = [remove_in_line_comments(line) for line in preamble]
+    preamble = [line.replace('\\', '\\\\') for line in preamble]
+    preamble = [line.replace('\"', '\\\"') for line in preamble]
+    preamble = [line.replace('\'', '\\\'') for line in preamble]
 
 def prepend_preamble(cmd):
     return [cmd, ] + preamble
@@ -51,8 +56,8 @@ def create(file_name,
 
     with open(os.path.join('img', gpfile_name), 'w') as f:
         color_type = 'monochrome' if monochrome else 'color'
-        f.write('set terminal epslatex size {}, {} {} standalone "" 9 header \'{}\'\n'
-                .format(*size, color_type, ' '.join(preamble)))
+        f.write('set terminal epslatex size {}, {} {} standalone "" 9 header \\\n'.format(*size, color_type))
+        f.write('"{}"\n'.format('\\n'.join(preamble)))
 
         f.write('set output \'{}\'\n'.format(texfile_name))
         f.write('load \'/home/jovyan/scripts/parula.pal\'\n')
