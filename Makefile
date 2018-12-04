@@ -3,7 +3,7 @@
 all: notebook 
 
 fixpolicy.sh:
-	wget https://raw.githubusercontent.com/avitase/docker-imagemagick/master/fixpolicy.sh fixpolicy.sh
+	wget https://raw.githubusercontent.com/avitase/docker-imagemagick/master/fixpolicy.sh -O fixpolicy.sh
 	chmod u+x fixpolicy.sh
 
 clean:
