@@ -14,7 +14,8 @@ texlive-pstricks \
 texlive-science
 RUN apt-get install -yq \
 gnuplot \
-ghostscript imagemagick
+ghostscript imagemagick \
+vim
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 ADD fixpolicy.sh /
 RUN /fixpolicy.sh && rm /fixpolicy.sh
