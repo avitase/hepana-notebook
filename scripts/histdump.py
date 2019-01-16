@@ -9,8 +9,10 @@ def poisson_interval(k, alpha=2.*0.159):
     low = chi2.ppf(alpha/2., 2*k) / 2. if k > 0 else 0.
     return low, high
 
-def dump_hist(hist, bin_edges, file_name, error_fct=poisson_interval, errors=[]):
+def dump_hist(hist, bin_edges, file_name, error_fct=poisson_interval, normalize=False, errors=[]):
     assert len(errors) == 0 or len(errors) == len(hist)
+
+    n_total = sum(hist) if normalize else -1
 
     file_name = os.path.join('img', file_name)
 
@@ -29,6 +31,12 @@ def dump_hist(hist, bin_edges, file_name, error_fct=poisson_interval, errors=[])
                 error_low, error_up = n - errors[i], n + errors[i]
             else:
                 error_low, error_up = error_fct(n)
+
+            if normalize:
+                binw = abs(bin_edges[i+1] - bin_edges[i])
+                n = float(n) / float(n_total) / float(binw)
+                error_low = float(error_low) / float(n_total) / float(binw)
+                error_up = float(error_up) / float(n_total) / float(binw)
 
             i = i + 1
 
@@ -54,14 +62,14 @@ def dump_hist2d(hist, xbin_edges, ybin_edges, file_name):
                 values = x, y, x_low, x_high, y_low, y_high, n
                 f.write(row_temp.format(*values) + '\n')
 
-def make_hist_file(data, bin_edges, file_name, error_fct=poisson_interval, errors=[]):
+def make_hist_file(data, bin_edges, file_name, error_fct=poisson_interval, normalize=False, errors=[]):
     hist, bin_edges = np.histogram(data, bin_edges)
-    dump_hist(hist, bin_edges, file_name, error_fct, errors)
+    dump_hist(hist, bin_edges, file_name, error_fct, normalize, errors)
 
-def dump_hist_with_given_uncertainties(data, bin_edges, file_name):
+def dump_hist_with_given_uncertainties(data, bin_edges, file_name, normalize=False):
     data = [(float(x.n), float(x.s)) for x in data]
     data, errors = zip(*data)
-    dump_hist(data, bin_edges, file_name, errors=errors)
+    dump_hist(data, bin_edges, file_name, normalize=normalize, errors=errors)
 
 def make_steps_file(func, bin_edges, file_name, n=100):
     file_name = os.path.join('img', file_name)
