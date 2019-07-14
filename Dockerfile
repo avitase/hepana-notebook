@@ -23,9 +23,9 @@ RUN /fixpolicy.sh && rm /fixpolicy.sh
 USER ${USERNAME}
 
 RUN pip install --upgrade pip && pip install \
-uncertainties iminuit sympy
+uncertainties iminuit sympy scikit-optimize
 
-RUN conda update conda && \
+RUN conda update -n base conda && \
 conda install -c conda-forge jupyter_nbextensions_configurator && \
 conda install -c conda-forge jupyter_contrib_nbextensions
 RUN jupyter nbextension enable spellchecker/main
