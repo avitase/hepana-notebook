@@ -23,7 +23,7 @@ RUN /fixpolicy.sh && rm /fixpolicy.sh
 USER ${USERNAME}
 
 RUN pip install --upgrade pip && pip install \
-uncertainties iminuit sympy scikit-optimize
+uncertainties iminuit sympy gpy gpyopt scikit-optimize
 
 RUN conda update -n base conda && \
 conda install -c conda-forge jupyter_nbextensions_configurator && \
