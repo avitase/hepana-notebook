@@ -29,9 +29,9 @@ class WHist:
 
         is_valid = lambda bin_idx, n_bins: bin_idx > 0 and bin_idx <= n_bins
         n_bins = lambda i: len(self._bin_edges[i]) - 1
-        if all([is_valid(bin_idxs[i], n_bins(i)) for i in range(n)]):
+        if all(is_valid(bin_idxs[i], n_bins(i)) for i in range(n)):
             self.entries += 1
-            idxs = tuple([bin_idx - 1 for bin_idx in bin_idxs])
+            idxs = tuple(bin_idx - 1 for bin_idx in bin_idxs)
             self.sumw2[idxs] += weight**2
             n = self.data[idxs].n
             u = sqrt(self.sumw2[idxs])

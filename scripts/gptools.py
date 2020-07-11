@@ -49,11 +49,7 @@ def create(file_name,
     lumi_and_sqrts_line = r'{} {} {}'.format(data_type, lumi, sqrts).strip()
 
     if not sqrts_ypos_on_graph:
-        if size == size_medium:
-            sqrts_ypos_on_graph = 1.025
-        else:
-            sqrts_ypos_on_graph = 1.04
-
+        sqrts_ypos_on_graph = 1.025 if size == size_medium else 1.04
     with open(os.path.join('img', gpfile_name), 'w') as f:
         color_type = 'monochrome' if monochrome else 'color'
         f.write('set terminal epslatex size {}, {} {} standalone "" 9 header \\\n'.format(*size, color_type))
